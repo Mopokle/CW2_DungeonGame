@@ -727,14 +727,14 @@ blend_mode = 1
 states/Attack/node = SubResource( 22 )
 states/Attack/position = Vector2( 424, 248 )
 states/Idle/node = SubResource( 27 )
-states/Idle/position = Vector2( 424, 153.139 )
+states/Idle/position = Vector2( 424, 152.738 )
 states/Roll/node = SubResource( 32 )
 states/Roll/position = Vector2( 424.278, 30.3333 )
 states/Run/node = SubResource( 37 )
 states/Run/position = Vector2( 619, 152.838 )
 transitions = [ "Idle", "Run", SubResource( 38 ), "Run", "Idle", SubResource( 39 ), "Idle", "Attack", SubResource( 40 ), "Attack", "Idle", SubResource( 41 ), "Idle", "Roll", SubResource( 42 ), "Roll", "Idle", SubResource( 43 ) ]
 start_node = "Idle"
-graph_offset = Vector2( -107, -33 )
+graph_offset = Vector2( 66.28, -69.81 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=45]
 
@@ -783,6 +783,7 @@ tracks/0/keys = {
 collision_layer = 2
 collision_mask = 3
 script = ExtResource( 2 )
+ROLL_SPEED = 119
 
 [node name="ShadowSprite" type="Sprite" parent="."]
 position = Vector2( -0.75, 0.25 )
@@ -799,7 +800,6 @@ vframes = 20
 frame = 72
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 light_mask = 0
 rotation = -1.5708
 z_as_relative = false
@@ -830,7 +830,7 @@ tree_root = SubResource( 44 )
 anim_player = NodePath("../CollisionShape2D/AnimationPlayer")
 parameters/playback = SubResource( 45 )
 parameters/Attack/blend_position = Vector2( 0, 1 )
-parameters/Idle/blend_position = Vector2( 0, 1 )
+parameters/Idle/blend_position = Vector2( 0, 0.018857 )
 parameters/Roll/blend_position = Vector2( 0, 1 )
 parameters/Run/blend_position = Vector2( 0, 1 )
 
@@ -842,7 +842,7 @@ __meta__ = {
 }
 
 [node name="PunchHitbox" parent="HitboxPivot" instance=ExtResource( 3 )]
-position = Vector2( 15, 0 )
+position = Vector2( 15, 1 )
 collision_mask = 8
 script = ExtResource( 4 )
 

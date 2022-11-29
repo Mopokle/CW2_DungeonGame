@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 const PlayerHurtSound = preload("res://Player/PlayerHurtSound.tscn")
+const GameOverScreen = preload("res://UI/GameOverScreen.tscn")
 
 export var ACCELERATION = 600
 export var MAX_SPEED = 100
@@ -17,6 +18,7 @@ var state = MOVE
 var velocity = Vector2.ZERO
 var roll_vector = Vector2.DOWN
 var stats = PlayerStats
+var knockback = Vector2.ZERO
 
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
@@ -27,11 +29,14 @@ onready var blinkAnimationPlayer = $BlinkAnimationPlayer
 
 func _ready():
 	randomize()
-	#stats.connect("no_health", self, "queue_free")
+	stats.connect("no_health", self, "queue_free")
 	animationTree.active = true
 	punchHitbox.knockback_vector = roll_vector
 
 func _physics_process(delta):
+	knockback = knockback.move_toward(Vector2.ZERO, FRICTION * delta)
+	knockback = move_and_slide(knockback)
+	
 	match state:
 		MOVE:
 			move_state(delta)
@@ -68,6 +73,7 @@ func move_state(delta):
 	
 	if Input.is_action_just_pressed("attack"):
 		state = ATTACK
+		
 func roll_state():
 	velocity = roll_vector * ROLL_SPEED
 	animationState.travel("Roll")
@@ -89,8 +95,15 @@ func attack_animation_finished():
 
 func _on_Hurtbox_area_entered(area):
 	stats.health -= area.damage
-	hurtbox.start_invincibility(0.6)
+	if stats.health <= 0:
+		var gameOverScreen = GameOverScreen.instance()
+		get_tree().current_scene.add_child(gameOverScreen)
+		gameOverScreen.set_title(false)
+	
+	knockback = area.knockback_vector * 100
 	hurtbox.create_hit_effect()
+	hurtbox.start_invincibility(0.6)
+	
 	var playerHurtSound = PlayerHurtSound.instance()
 	get_tree().current_scene.add_child(playerHurtSound)
 	
@@ -99,4 +112,3 @@ func _on_Hurtbox_invincibility_started():
 
 func _on_Hurtbox_invincibility_ended():
 	blinkAnimationPlayer.play("Stop")
-	print ("hello")

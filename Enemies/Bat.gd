@@ -1,10 +1,11 @@
 extends KinematicBody2D
 
 const EnemyDeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
+const GameOverScreen = preload("res://UI/GameOverScreen.tscn")
 
 export var ACCELERATION = 300
-export var MAX_SPEED = 50
-export var FRICTION = 200
+export var MAX_SPEED = 20
+export var FRICTION = 600
 export var WANDER_TARGET_RANGE = 4
 
 enum {
@@ -15,42 +16,59 @@ enum {
 
 var velocity = Vector2.ZERO
 var knockback = Vector2.ZERO
+var roll_vector = Vector2.DOWN
 
 var state = CHASE
 
-onready var sprite = $AnimatedSprite
+#onready var sprite = $AnimatedSprite
 onready var stats = $Stats
 onready var playerDetectionZone = $PlayerDetectionZone
 onready var hurtbox = $Hurtbox
 onready var softCollision = $SoftCollision
 onready var wanderController = $WanderController
+#onready var animationPlayer = $AnimationPlayer
+onready var sprite = $Sprite
 onready var animationPlayer = $AnimationPlayer
+onready var animationTree = $AnimationTree
+onready var animationState = animationTree.get("parameters/playback")
+onready var hitbox = $Hitbox
 
 func _ready():
-	state = pick_random_state([IDLE, WANDER])
-
+	#state = pick_random_state([IDLE, WANDER])
+	state = IDLE
+	animationTree.active = true
+	hitbox.knockback_vector = roll_vector
+	
 func _physics_process(delta):
 	knockback = knockback.move_toward(Vector2.ZERO, FRICTION * delta)
 	knockback = move_and_slide(knockback)
 	
 	match state:
 		IDLE:
-			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 			seek_player()
-			if wanderController.get_time_left() == 0:
-				update_wander()
+			animationState.travel("Idle")
+			#velocity = velocity.move_toward(Vector2.100 * MAX_SPEED, FRICTION * delta)
+			
+			#if wanderController.get_time_left() == 0:
+				#update_wander()
 				
-		WANDER:
-			seek_player()
-			if wanderController.get_time_left() == 0:
-				update_wander()
-			accelerate_towards_point(wanderController.target_position, delta)
-			if global_position.distance_to(wanderController.target_position) <= WANDER_TARGET_RANGE:
-				update_wander()
+		#WANDER:
+			#seek_player()
+			#if wanderController.get_time_left() == 0:
+				#update_wander()
+			#accelerate_towards_point(wanderController.target_position, delta)
+			#if global_position.distance_to(wanderController.target_position) <= WANDER_TARGET_RANGE:
+				#update_wander()
 			
 		CHASE:
+			var input_vector = Vector2.ZERO
 			var player = playerDetectionZone.player
 			if player != null:
+				#animationTree.set("parameters/Idle/blend_position", input_vector)
+				#animationTree.set("parameters/Run/blend_position", input_vector)
+				#animationTree.set("parameters/Attack/blend_position", input_vector)
+				animationState.travel("Run")
+				#velocity = velocity.move_toward(Vector2.ZERO * MAX_SPEED, ACCELERATION * delta)
 				accelerate_towards_point(player.global_position, delta)
 			else:
 				state = IDLE
@@ -63,6 +81,7 @@ func accelerate_towards_point(point, delta):
 	var direction = global_position.direction_to(point)
 	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 	sprite.flip_h = velocity.x < 0
+	velocity = move_and_slide(velocity)
 
 func seek_player():
 	if playerDetectionZone.can_see_player():
@@ -78,6 +97,8 @@ func pick_random_state(state_list):
 
 func _on_Hurtbox_area_entered(area):
 	stats.health -= area.damage
+	
+	animationState.travel("Attack")
 	knockback = area.knockback_vector * 100
 	hurtbox.create_hit_effect()
 	hurtbox.start_invincibility(0.4)
