@@ -73,6 +73,15 @@ func move_state(delta):
 	
 	if Input.is_action_just_pressed("attack"):
 		state = ATTACK
+	
+	if Input.is_action_just_pressed("Health"):
+		if stats.max_health <= 8:
+			stats.max_health += 1
+		if stats.health <= 8:
+			stats.health += 1
+			
+	if Input.is_action_just_pressed("UpgradeDamage"):
+		punchHitbox.damage += 1
 		
 func roll_state():
 	velocity = roll_vector * ROLL_SPEED
