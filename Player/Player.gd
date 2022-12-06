@@ -3,10 +3,10 @@ extends KinematicBody2D
 const PlayerHurtSound = preload("res://Player/PlayerHurtSound.tscn")
 const GameOverScreen = preload("res://UI/GameOverScreen.tscn")
 
-export var ACCELERATION = 600
+export var ACCELERATION = 500
 export var MAX_SPEED = 100
-export var ROLL_SPEED = 120
-export var FRICTION = 600
+export var ROLL_SPEED = 400
+export var FRICTION = 500
 
 enum {
 	MOVE,
@@ -109,7 +109,7 @@ func _on_Hurtbox_area_entered(area):
 		get_tree().current_scene.add_child(gameOverScreen)
 		gameOverScreen.set_title(false)
 	
-	knockback = area.knockback_vector * 100
+	knockback = area.knockback_vector * 0
 	hurtbox.create_hit_effect()
 	hurtbox.start_invincibility(0.6)
 	
