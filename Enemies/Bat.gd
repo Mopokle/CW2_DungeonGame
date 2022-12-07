@@ -99,7 +99,7 @@ func _on_Hurtbox_area_entered(area):
 	stats.health -= area.damage
 	
 	animationState.travel("Attack")
-	knockback = area.knockback_vector * 100
+	knockback = area.knockback_vector * 200
 	hurtbox.create_hit_effect()
 	hurtbox.start_invincibility(0.4)
 
