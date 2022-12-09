@@ -2245,7 +2245,6 @@ collision_mask = 2
 remote_path = NodePath("../../../Camera2D")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="HealthUI" parent="CanvasLayer" instance=ExtResource( 8 )]
 margin_left = 3.0
