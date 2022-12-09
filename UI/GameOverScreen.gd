@@ -10,7 +10,7 @@ func _ready():
 	
 func set_title(win : bool):
 	if !win:
-		title.text = "YOU LOSE"
+		title.text = "YOU DIED"
 		title.modulate = Color.green
 	#else:
 		#title.text = "YOU LOSE"

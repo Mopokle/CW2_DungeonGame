@@ -3,10 +3,10 @@ extends KinematicBody2D
 const PlayerHurtSound = preload("res://Player/PlayerHurtSound.tscn")
 const GameOverScreen = preload("res://UI/GameOverScreen.tscn")
 
-export var ACCELERATION = 600
+export var ACCELERATION = 500
 export var MAX_SPEED = 100
-export var ROLL_SPEED = 120
-export var FRICTION = 600
+export var ROLL_SPEED = 400
+export var FRICTION = 500
 
 enum {
 	MOVE,
@@ -75,9 +75,9 @@ func move_state(delta):
 		state = ATTACK
 	
 	if Input.is_action_just_pressed("Health"):
-		if stats.max_health <= 8:
-			stats.max_health += 1
-		if stats.health <= 8:
+		#if stats.max_health <= 8:
+			#stats.max_health += 1
+		if stats.health < stats.max_health:
 			stats.health += 1
 			
 	if Input.is_action_just_pressed("UpgradeDamage"):
@@ -104,12 +104,13 @@ func attack_animation_finished():
 
 func _on_Hurtbox_area_entered(area):
 	stats.health -= area.damage
+	punchHitbox.damage += 1
 	if stats.health <= 0:
 		var gameOverScreen = GameOverScreen.instance()
 		get_tree().current_scene.add_child(gameOverScreen)
 		gameOverScreen.set_title(false)
 	
-	knockback = area.knockback_vector * 100
+	knockback = area.knockback_vector * 0
 	hurtbox.create_hit_effect()
 	hurtbox.start_invincibility(0.6)
 	
