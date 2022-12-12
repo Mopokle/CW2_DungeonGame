@@ -43,6 +43,9 @@ text = "Game Over"
 align = 1
 valign = 1
 
+[node name="04BoxFrames9Patch" type="Sprite" parent="PanelContainer/MarginContainer/Rows/Title"]
+position = Vector2( 120, 18 )
+
 [node name="CenterContainer" type="CenterContainer" parent="PanelContainer/MarginContainer/Rows"]
 margin_top = 89.0
 margin_right = 320.0

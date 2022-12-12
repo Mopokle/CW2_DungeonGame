@@ -1,0 +1,35 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/keycard (1) (1).png-12504867507c5a685259a55dd5df28d9.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://Map/keycard (1) (1).png"
+dest_files=[ "res://.import/keycard (1) (1).png-12504867507c5a685259a55dd5df28d9.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+process/normal_map_invert_y=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0
