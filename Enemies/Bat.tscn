@@ -8,7 +8,7 @@
 [ext_resource path="res://Overlap/Hitbox.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Overlap/SoftCollision.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Enemies/WanderController.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Security/Security_Atlas (1).png" type="Texture" id=11]
+[ext_resource path="res://Security/Security_Atlas.png" type="Texture" id=11]
 
 [sub_resource type="CircleShape2D" id=7]
 radius = 4.0
@@ -403,7 +403,6 @@ shape = SubResource( 8 )
 max_health = 2
 
 [node name="PlayerDetectionZone" parent="." instance=ExtResource( 6 )]
-visible = false
 
 [node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
 modulate = Color( 1, 1, 1, 0.454902 )

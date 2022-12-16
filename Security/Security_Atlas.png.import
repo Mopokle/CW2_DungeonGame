@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Security_Atlas (1).png-d75c01b0629e34398e6dedddcdf4ec9a.stex"
+path="res://.import/Security_Atlas.png-3093da5a29d93650e00b535c6df1aa8e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Security/Security_Atlas (1).png"
-dest_files=[ "res://.import/Security_Atlas (1).png-d75c01b0629e34398e6dedddcdf4ec9a.stex" ]
+source_file="res://Security/Security_Atlas.png"
+dest_files=[ "res://.import/Security_Atlas.png-3093da5a29d93650e00b535c6df1aa8e.stex" ]
 
 [params]
 
