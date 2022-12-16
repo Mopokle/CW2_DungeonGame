@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 const EnemyDeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
 const GameOverScreen = preload("res://UI/GameOverScreen.tscn")
+const hit = preload("res://Overlap/Hitbox.tscn")
 
 export var ACCELERATION = 300
 export var MAX_SPEED = 20
@@ -17,6 +18,7 @@ enum {
 var velocity = Vector2.ZERO
 var knockback = Vector2.ZERO
 var roll_vector = Vector2.DOWN
+var stats_p = PlayerStats
 
 var state = CHASE
 
@@ -102,9 +104,15 @@ func _on_Hurtbox_area_entered(area):
 	knockback = area.knockback_vector * 200
 	hurtbox.create_hit_effect()
 	hurtbox.start_invincibility(0.4)
+	
+	
 
 func _on_Stats_no_health():
 	queue_free()
+	if stats_p.max_health < 8:
+		stats_p.max_health += 1
+		stats_p.health += 1
+		
 	var enemyDeathEffect = EnemyDeathEffect.instance()
 	get_parent().add_child(enemyDeathEffect)
 	enemyDeathEffect.global_position = global_position

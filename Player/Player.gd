@@ -75,9 +75,9 @@ func move_state(delta):
 		state = ATTACK
 	
 	if Input.is_action_just_pressed("Health"):
-		if stats.max_health <= 8:
-			stats.max_health += 1
-		if stats.health <= 8:
+		#if stats.max_health <= 8:
+			#stats.max_health += 1
+		if stats.health < stats.max_health:
 			stats.health += 1
 			
 	if Input.is_action_just_pressed("UpgradeDamage"):
@@ -104,6 +104,7 @@ func attack_animation_finished():
 
 func _on_Hurtbox_area_entered(area):
 	stats.health -= area.damage
+	punchHitbox.damage += 1
 	if stats.health <= 0:
 		var gameOverScreen = GameOverScreen.instance()
 		get_tree().current_scene.add_child(gameOverScreen)
